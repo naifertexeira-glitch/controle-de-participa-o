@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Controle de Notas - Educação Física</title>
+    <style>
+        :root {
+            --bg-light: #e8f5e9;
+            --primary-dark: #1b5e20;
+            --primary-medium: #2e7d32;
+            --primary-light: #4caf50;
+            --accent-green: #81c784;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --danger-red: #d32f2f;
+            --warning-amber: #f57c00;
+            --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        header.school-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
+            color: white;
+            padding: 20px 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo-container {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid var(--accent-green);
+            position: relative;
+            cursor: pointer;
+        }
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .logo-placeholder {
+            font-size: 11px;
+            color: var(--primary-dark);
+            text-align: center;
+            padding: 5px;
+            font-weight: bold;
+        }
+        .school-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .school-info input {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+        .school-info input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .class-selector-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+        .class-selector-area select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            color: var(--primary-dark);
+            background: white;
+            cursor: pointer;
+        }
+        nav.nav-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            scrollbar-width: thin;
+        }
+        .nav-btn {
+            background: #c8e6c9;
+            color: var(--primary-dark);
+            border: none;
+            padding: 12px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-btn:hover {
+            background: var(--accent-green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .nav-btn.active {
+            background: var(--primary-medium);
+            color: white;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+        }
+        .tab-content {
+            display: none;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2.section-title {
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 10px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        .form-card {
+            background: #f9fbf9;
+            border: 1px solid #c8e6c9;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 0.9rem;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #a5d6a7;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--primary-medium);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        .btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-primary { background: var(--primary-medium); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-danger { background: var(--danger-red); color: white; }
+        .btn-danger:hover { background: #b71c1c; }
+        .btn-warning { background: var(--warning-amber); color: white; }
+        .btn-secondary { background: #9e9e9e; color: white; }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+        table.custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        table.custom-table th {
+            background: var(--primary-dark);
+            color: white;
+            text-align: left;
+            padding: 12px;
+            font-weight: 600;
+        }
+        table.custom-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        table.custom-table tbody tr:nth-child(even) {
+            background-color: #f4fbf5;
+        }
+        table.custom-table tbody tr:hover {
+            background-color: #e8f5e9;
+        }
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .badge-danger { background: #ffebee; color: var(--danger-red); }
+        .badge-success { background: #e8f5e9; color: var(--primary-dark); }
+
+        .student-check-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 8px;
+            border-bottom: 1px solid #eee;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .student-check-item:hover {
+            background-color: #e8f5e9;
+        }
+        .student-check-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: var(--danger-red);
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            header.school-header, nav.nav-tabs, .btn, .no-print { display: none !important; }
+            .tab-content { display: none !important; box-shadow: none; padding: 0; }
+            #tab-print { display: block !important; }
+            .print-header { display: flex !important; align-items: center; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
+            .print-header img { max-height: 70px; }
+            table.custom-table th { background: #333 !important; color: white !important; }
+        }
+        .print-header { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header class="school-header">
+        <div class="header-brand">
+            <div class="logo-container" onclick="document.getElementById('logoInput').click();" title="Clique para alterar a logo">
+                <img id="schoolLogo" src="" alt="" style="display:none;">
+                <div id="logoPlaceholder" class="logo-placeholder">Inserir Logo</div>
+            </div>
+            <input type="file" id="logoInput" accept="image/*" style="display:none;" onchange="uploadLogo(event)">
+            
+            <div class="school-info">
+                <input type="text" id="schoolNameInput" value="Colégio Estadual de Educação Física" onchange="saveSchoolName()" placeholder="Nome da Escola / Colégio">
+                <span style="font-size: 0.85rem; opacity: 0.9;">Sistema Integrado de Gestão & Avaliação em Ed. Física</span>
+            </div>
+        </div>
+
+        <div class="class-selector-area">
+            <label for="currentClassSelect" style="color:white; font-size: 0.9rem; font-weight:bold;">Turma Ativa:</label>
+            <select id="currentClassSelect" onchange="switchClass()"></select>
+            <span id="syncStatus" style="font-size:0.75rem; opacity:0.85; margin-left:6px;" title="Status da conexão com o banco de dados">☁️ ...</span>
+        </div>
+    </header>
+
+    <nav class="nav-tabs">
+        <button class="nav-btn active" onclick="openTab('tab-turmas', this)">🏫 Turmas & Alunos</button>
+        <button class="nav-btn" onclick="openTab('tab-aulas', this)">📝 Registro de Aulas</button>
+        <button class="nav-btn" onclick="openTab('tab-avaliacoes', this)">📊 Avaliações do Trimestre</button>
+        <button class="nav-btn" onclick="openTab('tab-q1', this)">🗓️ 1º Trimestre</button>
+        <button class="nav-btn" onclick="openTab('tab-q2', this)">🗓️ 2º Trimestre</button>
+        <button class="nav-btn" onclick="openTab('tab-q3', this)">🗓️ 3º Trimestre</button>
+        <button class="nav-btn" onclick="openTab('tab-medias', this)">📈 Médias & Finais</button>
+        <button class="nav-btn" onclick="openTab('tab-recuperacao', this)">🔄 Recuperação</button>
+        <button class="nav-btn" onclick="openTab('tab-print', this)">🖨️ Impressão</button>
+    </nav>
+
+    <!-- ABA 1: TURMAS E ALUNOS -->
+    <div id="tab-turmas" class="tab-content active">
+        <h2 class="section-title">Gerenciamento de Turmas e Alunos</h2>
+        <div class="grid-2">
+            <div>
+                <div class="form-card">
+                    <h3>Cadastrar / Editar Turma</h3>
+                    <form id="classForm" onsubmit="saveClass(event)" style="margin-top:15px;">
+                        <input type="hidden" id="classId">
+                        <div class="form-group">
+                            <label>Nome da Turma:</label>
+                            <input type="text" id="className" placeholder="Ex: 5º Ano A, 6º Ano A, 9º Ano B, 1º Ano EM" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nome do Professor(a):</label>
+                            <input type="text" id="teacherName" placeholder="Prof. João Silva" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nível Ensino / Regra de Notas:</label>
+                            <select id="classLevel" required>
+                                <option value="ano5">5º Ano (Moldes do 6º Ano)</option>
+                                <option value="fund2">Fundamental 02 (6º ao 8º Ano)</option>
+                                <option value="ano9">9º Ano (Fundamental 02)</option>
+                                <option value="em1">Ensino Médio (1º Ano)</option>
+                            </select>
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <button type="submit" class="btn btn-primary">Salvar Turma</button>
+                            <button type="button" class="btn btn-secondary" onclick="resetClassForm()">Limpar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="form-card">
+                    <h3>Turmas Cadastradas</h3>
+                    <div class="table-responsive">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Turma</th>
+                                    <th>Professor</th>
+                                    <th>Nível</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="classListTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="form-card">
+                    <h3>Cadastro de Alunos em Lote (Turma Ativa)</h3>
+                    <p style="font-size:0.85rem; color:#666; margin-bottom:10px;">
+                        Cole a lista com os nomes dos alunos (um por linha) para cadastrar todos de uma vez.
+                    </p>
+                    <div class="form-group">
+                        <textarea id="bulkStudentsText" rows="8" placeholder="Ana Silva&#10;Bruno Santos&#10;Carlos Eduardo..."></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="importBulkStudents()">Importar Alunos para a Turma Ativa</button>
+                </div>
+
+                <div class="form-card">
+                    <h3>Lista de Alunos da Turma Ativa</h3>
+                    <div class="table-responsive">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nome do Aluno</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentListTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA 2: REGISTRO DE AULAS -->
+    <div id="tab-aulas" class="tab-content">
+        <h2 class="section-title">Registro de Aula e Marcar Sem Participação</h2>
+        <div class="grid-2">
+            <div>
+                <div class="form-card">
+                    <h3 id="lessonFormTitle">Lançar Nova Aula</h3>
+                    <form id="lessonForm" onsubmit="saveLesson(event)" style="margin-top:15px;">
+                        <input type="hidden" id="lessonId">
+                        
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                            <div class="form-group">
+                                <label>Data da Aula:</label>
+                                <input type="date" id="lessonDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Trimestre:</label>
+                                <select id="lessonQuarter" required>
+                                    <option value="1">1º Trimestre</option>
+                                    <option value="2">2º Trimestre</option>
+                                    <option value="3">3º Trimestre</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Quantidade de Aulas no Dia:</label>
+                            <select id="lessonCount" required>
+                                <option value="1">1 Aula (Desconto de -0,5 por não participação)</option>
+                                <option value="2">2 Aulas Duplas (Desconto de -1,0 por não participação)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tema / Conteúdo da Aula:</label>
+                            <input type="text" id="lessonContent" placeholder="Ex: Futsal - Passe e Recepção" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="color:var(--danger-red);">Selecione QUEM NÃO PARTICIPOU desta aula:</label>
+                            <p style="font-size:0.8rem; color:#666; margin-bottom: 8px;">
+                                O sistema aplicará o desconto automaticamente nas abas dos trimestres.
+                            </p>
+                            
+                            <input type="text" id="searchStudentInput" placeholder="🔍 Buscar aluno pelo nome..." onkeyup="filterStudentChecklist()" style="margin-bottom:8px; padding:6px 10px; font-size:0.85rem;">
+                            
+                            <div id="nonParticipantsChecklist" style="max-height: 220px; overflow-y: auto; background: white; padding: 8px; border: 1px solid #a5d6a7; border-radius: 6px;"></div>
+                        </div>
+
+                        <div style="display:flex; gap:10px;">
+                            <button type="submit" class="btn btn-primary">Salvar Aula</button>
+                            <button type="button" class="btn btn-secondary" onclick="resetLessonForm()">Limpar / Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <div class="form-card">
+                    <h3>Histórico de Aulas Registradas</h3>
+                    <div class="table-responsive">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Trim.</th>
+                                    <th>Aulas</th>
+                                    <th>Tema / Conteúdo</th>
+                                    <th>Sem Part.</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lessonHistoryTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA 3: LANÇAMENTO DE NOTAS COMPLEMENTARES -->
+    <div id="tab-avaliacoes" class="tab-content">
+        <h2 class="section-title">Lançamento de Notas Avaliativas</h2>
+        <p style="margin-bottom:15px;">Selecione o Trimestre e digite os valores dos campos aplicáveis para a turma ativa.</p>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="font-weight:bold;">Selecione o Trimestre: </label>
+            <select id="evalQuarterSelect" onchange="renderEvalInputs()" style="padding:6px 12px; border-radius:6px; border:1px solid #999;">
+                <option value="1">1º Trimestre</option>
+                <option value="2">2º Trimestre</option>
+                <option value="3">3º Trimestre</option>
+            </select>
+        </div>
+
+        <div id="rulesNotice" class="badge badge-success" style="display:block; padding:10px; margin-bottom:15px; font-size:0.9rem; font-weight:normal;"></div>
+
+        <div class="table-responsive">
+            <table class="custom-table">
+                <thead id="evalTableHead"></thead>
+                <tbody id="evalTableBody"></tbody>
+            </table>
+        </div>
+        <button type="button" class="btn btn-primary" style="margin-top:15px;" onclick="saveExtraEvaluations()">Salvar Notas do Trimestre</button>
+    </div>
+
+    <!-- ABA 4: 1º TRIMESTRE -->
+    <div id="tab-q1" class="tab-content">
+        <h2 class="section-title">Detalhamento - 1º Trimestre</h2>
+        <div id="table-q1-container" class="table-responsive"></div>
+    </div>
+
+    <!-- ABA 5: 2º TRIMESTRE -->
+    <div id="tab-q2" class="tab-content">
+        <h2 class="section-title">Detalhamento - 2º Trimestre</h2>
+        <div id="table-q2-container" class="table-responsive"></div>
+    </div>
+
+    <!-- ABA 6: 3º TRIMESTRE -->
+    <div id="tab-q3" class="tab-content">
+        <h2 class="section-title">Detalhamento - 3º Trimestre</h2>
+        <div id="table-q3-container" class="table-responsive"></div>
+    </div>
+
+    <!-- ABA 7: MÉDIAS & FINAIS -->
+    <div id="tab-medias" class="tab-content">
+        <h2 class="section-title">Resumo das Médias Trimestrais e Média Final Anual</h2>
+        <div id="table-medias-container" class="table-responsive"></div>
+    </div>
+
+    <!-- ABA 8: RECUPERAÇÃO -->
+    <div id="tab-recuperacao" class="tab-content">
+        <h2 class="section-title">Controle de Recuperação Trimestral e Anual (Nota &lt; 6,0)</h2>
+        <p style="margin-bottom:15px;">Alunos com média inferior a 6,0 necessitam de lançamento de recuperação.</p>
+        <div class="table-responsive">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Aluno</th>
+                        <th>Média 1º T</th>
+                        <th>Rec. 1º T</th>
+                        <th>Média 2º T</th>
+                        <th>Rec. 2º T</th>
+                        <th>Média 3º T</th>
+                        <th>Rec. 3º T</th>
+                        <th>Média Anual</th>
+                        <th>Rec. Anual</th>
+                        <th>Situação Final</th>
+                    </tr>
+                </thead>
+                <tbody id="recoveryTableBody"></tbody>
+            </table>
+        </div>
+        <button type="button" class="btn btn-primary" style="margin-top:15px;" onclick="saveRecoveryGrades()">Salvar Notas de Recuperação</button>
+    </div>
+
+    <!-- ABA 9: IMPRESSÃO -->
+    <div id="tab-print" class="tab-content">
+        <div class="no-print" style="margin-bottom: 20px;">
+            <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Imprimir Relatório Oficial</button>
+        </div>
+
+        <div class="print-header">
+            <img id="printLogo" src="" alt="Logo" style="display:none; max-height: 60px;">
+            <div>
+                <h2 id="printSchoolName" style="margin:0;">Nome do Colégio</h2>
+                <p style="margin:0; font-size:0.9rem;">Relatório de Desempenho e Frequência em Educação Física</p>
+            </div>
+            <div style="text-align:right; font-size:0.85rem;">
+                <p><strong>Turma:</strong> <span id="printClassName">-</span></p>
+                <p><strong>Professor:</strong> <span id="printTeacherName">-</span></p>
+            </div>
+        </div>
+
+        <h3>Boletim Geral de Aulas, Faltas e Médias</h3>
+        <div id="printTableContainer" class="table-responsive" style="margin-top:15px;"></div>
+    </div>
+</div>
+
+<script>
+    let appData = {
+        schoolName: "Colégio Estadual de Educação Física",
+        schoolLogo: "",
+        currentClassId: null,
+        classes: []
+    };
+
+    let isSyncing = false;
+    let pendingSavePayload = null;
+
+    function setSyncStatus(status) {
+        const el = document.getElementById('syncStatus');
+        if (!el) return;
+        if (status === 'saving') {
+            el.textContent = '☁️ Salvando...';
+        } else if (status === 'ok') {
+            el.textContent = '☁️ Salvo na nuvem';
+        } else if (status === 'offline') {
+            el.textContent = '☁️ Offline (apenas neste navegador)';
+        } else {
+            el.textContent = '☁️ ...';
+        }
+    }
+
+    window.onload = function() {
+        loadData().then(() => {
+            renderClassSelector();
+            renderClassTable();
+            renderActiveTabData();
+            setSyncStatus('ok');
+        }).catch(() => setSyncStatus('offline'));
+    };
+
+    function saveData() {
+        const payload = JSON.stringify(appData);
+
+        try {
+            localStorage.setItem('pe_app_data_v2', payload);
+        } catch(e) {
+            console.error("Erro ao salvar backup no localStorage:", e);
+        }
+
+        if (isSyncing) {
+            pendingSavePayload = payload;
+            return;
+        }
+
+        isSyncing = true;
+        setSyncStatus('saving');
+
+        fetch('/api/state', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: payload
+        })
+        .then(res => {
+            if (!res.ok) throw new Error('Falha HTTP ' + res.status);
+            setSyncStatus('ok');
+        })
+        .catch(e => {
+            console.error("Erro ao salvar no banco de dados:", e);
+            setSyncStatus('offline');
+        })
+        .finally(() => {
+            isSyncing = false;
+            if (pendingSavePayload) {
+                const next = pendingSavePayload;
+                pendingSavePayload = null;
+                fetch('/api/state', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: next
+                }).then(res => {
+                    if (res.ok) setSyncStatus('ok');
+                }).catch(() => setSyncStatus('offline'));
+            }
+        });
+    }
+
+    async function loadData() {
+        let loadedFromServer = false;
+        let serverHasData = false;
+        try {
+            const res = await fetch('/api/state');
+            const json = await res.json();
+            if (json.ok && json.data && typeof json.data === 'object') {
+                appData = json.data;
+                loadedFromServer = true;
+                serverHasData = true;
+            }
+        } catch (e) {
+            console.error("Erro ao carregar dados do servidor:", e);
+        }
+
+        if (!loadedFromServer) {
+            try {
+                const local = localStorage.getItem('pe_app_data_v2');
+                if (local) {
+                    const parsed = JSON.parse(local);
+                    if (!serverHasData && parsed && typeof parsed === 'object') {
+                        appData = parsed;
+                        appData._needsInitialSync = true;
+                    }
+                }
+            } catch (e) {
+                console.error("Erro ao carregar localStorage:", e);
+            }
+        }
+
+        if (!appData.classes) appData.classes = [];
+
+        appData.classes.forEach(c => {
+            if (!c.students) c.students = [];
+            if (!c.lessons) c.lessons = [];
+            if (!c.extraGrades) c.extraGrades = { q1: {}, q2: {}, q3: {} };
+            if (!c.recovery) c.recovery = { q1: {}, q2: {}, q3: {}, annual: {} };
+        });
+
+        if (appData.classes.length === 0) {
+            const defaultClass = {
+                id: 'c1',
+                name: '6º Ano A',
+                teacher: 'Prof. Carlos',
+                level: 'fund2',
+                students: [
+                    { id: 's1', name: 'Ana Clara Souza' },
+                    { id: 's2', name: 'Bernardo Lima' },
+                    { id: 's3', name: 'Gabriel Rodrigues' }
+                ],
+                lessons: [],
+                extraGrades: { q1: {}, q2: {}, q3: {} },
+                recovery: { q1: {}, q2: {}, q3: {}, annual: {} }
+            };
+            appData.classes.push(defaultClass);
+            appData.currentClassId = 'c1';
+            appData._needsInitialSync = true;
+        }
+
+        if (!appData.currentClassId && appData.classes.length > 0) {
+            appData.currentClassId = appData.classes[0].id;
+        }
+
+        document.getElementById('schoolNameInput').value = appData.schoolName || 'Colégio Estadual de Educação Física';
+        if (appData.schoolLogo) {
+            document.getElementById('schoolLogo').src = appData.schoolLogo;
+            document.getElementById('schoolLogo').style.display = 'block';
+            document.getElementById('logoPlaceholder').style.display = 'none';
+            document.getElementById('printLogo').src = appData.schoolLogo;
+            document.getElementById('printLogo').style.display = 'block';
+        }
+
+        if (appData._needsInitialSync) {
+            delete appData._needsInitialSync;
+            saveData();
+        }
+    }
+
+    function saveSchoolName() {
+        appData.schoolName = document.getElementById('schoolNameInput').value;
+        saveData();
+    }
+
+    function uploadLogo(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 200;
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    const resizedDataUrl = canvas.toDataURL('image/png', 0.8);
+                    appData.schoolLogo = resizedDataUrl;
+                    document.getElementById('schoolLogo').src = resizedDataUrl;
+                    document.getElementById('schoolLogo').style.display = 'block';
+                    document.getElementById('logoPlaceholder').style.display = 'none';
+                    document.getElementById('printLogo').src = resizedDataUrl;
+                    document.getElementById('printLogo').style.display = 'block';
+                    saveData();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function getActiveClass() {
+        if (!appData.classes || appData.classes.length === 0) return null;
+        return appData.classes.find(c => c.id === appData.currentClassId) || appData.classes[0];
+    }
+
+    function openTab(tabId, btnElement) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        if (btnElement) btnElement.classList.add('active');
+
+        renderActiveTabData();
+    }
+
+    function renderActiveTabData() {
+        renderStudentList();
+        renderLessonHistory();
+        renderNonParticipantsChecklist();
+        renderEvalInputs();
+        renderQuarterTable(1);
+        renderQuarterTable(2);
+        renderQuarterTable(3);
+        renderMediasTable();
+        renderRecoveryTable();
+        renderPrintReport();
+    }
+
+    // --- GERENCIAMENTO DE TURMAS E ALUNOS ---
+
+    function renderClassSelector() {
+        const select = document.getElementById('currentClassSelect');
+        select.innerHTML = '';
+        appData.classes.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.id;
+            opt.textContent = c.name;
+            if (c.id === appData.currentClassId) opt.selected = true;
+            select.appendChild(opt);
+        });
+    }
+
+    function switchClass() {
+        appData.currentClassId = document.getElementById('currentClassSelect').value;
+        saveData();
+        renderActiveTabData();
+    }
+
+    function renderClassTable() {
+        const tbody = document.getElementById('classListTable');
+        tbody.innerHTML = '';
+        appData.classes.forEach(c => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${c.name}</strong></td>
+                <td>${c.teacher}</td>
+                <td>${c.level}</td>
+                <td>
+                    <button class="btn btn-warning" style="padding: 2px 6px; font-size:0.75rem;" onclick="editClass('${c.id}')">Editar</button>
+                    <button class="btn btn-danger" style="padding: 2px 6px; font-size:0.75rem;" onclick="deleteClass('${c.id}')">Excluir</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function saveClass(e) {
+        e.preventDefault();
+        const id = document.getElementById('classId').value;
+        const name = document.getElementById('className').value;
+        const teacher = document.getElementById('teacherName').value;
+        const level = document.getElementById('classLevel').value;
+
+        if (id) {
+            const cls = appData.classes.find(c => c.id === id);
+            if (cls) {
+                cls.name = name;
+                cls.teacher = teacher;
+                cls.level = level;
+            }
+        } else {
+            const newClass = {
+                id: 'c_' + Date.now(),
+                name,
+                teacher,
+                level,
+                students: [],
+                lessons: [],
+                extraGrades: { q1: {}, q2: {}, q3: {} },
+                recovery: { q1: {}, q2: {}, q3: {}, annual: {} }
+            };
+            appData.classes.push(newClass);
+            appData.currentClassId = newClass.id;
+        }
+
+        saveData();
+        resetClassForm();
+        renderClassSelector();
+        renderClassTable();
+        renderActiveTabData();
+    }
+
+    function editClass(id) {
+        const cls = appData.classes.find(c => c.id === id);
+        if (cls) {
+            document.getElementById('classId').value = cls.id;
+            document.getElementById('className').value = cls.name;
+            document.getElementById('teacherName').value = cls.teacher;
+            document.getElementById('classLevel').value = cls.level;
+        }
+    }
+
+    function resetClassForm() {
+        document.getElementById('classForm').reset();
+        document.getElementById('classId').value = '';
+    }
+
+    function deleteClass(id) {
+        if (confirm("Deseja realmente excluir esta turma? Todos os registros serão perdidos.")) {
+            appData.classes = appData.classes.filter(c => c.id !== id);
+            if (appData.classes.length > 0) {
+                appData.currentClassId = appData.classes[0].id;
+            } else {
+                appData.currentClassId = null;
+            }
+            saveData();
+            renderClassSelector();
+            renderClassTable();
+            renderActiveTabData();
+        }
+    }
+
+    function importBulkStudents() {
+        const activeClass = getActiveClass();
+        if (!activeClass) return alert("Selecione ou cadastre uma turma primeiro!");
+        const text = document.getElementById('bulkStudentsText').value;
+        const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+        lines.forEach(name => {
+            activeClass.students.push({
+                id: 's_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                name
+            });
+        });
+
+        document.getElementById('bulkStudentsText').value = '';
+        saveData();
+        renderStudentList();
+        renderNonParticipantsChecklist();
+    }
+
+    function renderStudentList() {
+        const activeClass = getActiveClass();
+        const tbody = document.getElementById('studentListTable');
+        tbody.innerHTML = '';
+        if (!activeClass) return;
+
+        activeClass.students.forEach((s, idx) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${idx + 1}</td>
+                <td>${s.name}</td>
+                <td>
+                    <button class="btn btn-danger" style="padding: 2px 6px; font-size:0.75rem;" onclick="deleteStudent('${s.id}')">Remover</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function deleteStudent(id) {
+        const activeClass = getActiveClass();
+        if (activeClass && confirm("Remover aluno?")) {
+            activeClass.students = activeClass.students.filter(s => s.id !== id);
+            saveData();
+            renderStudentList();
+            renderNonParticipantsChecklist();
+        }
+    }
+
+    // --- GERENCIAMENTO DE AULAS ---
+
+    function filterStudentChecklist() {
+        const query = document.getElementById('searchStudentInput').value.toLowerCase();
+        const items = document.querySelectorAll('#nonParticipantsChecklist .student-check-item');
+        items.forEach(item => {
+            const name = item.textContent.toLowerCase();
+            item.style.display = name.includes(query) ? 'flex' : 'none';
+        });
+    }
+
+    function renderNonParticipantsChecklist() {
+        const container = document.getElementById('nonParticipantsChecklist');
+        container.innerHTML = '';
+        const activeClass = getActiveClass();
+        if (!activeClass) return;
+
+        activeClass.students.forEach(s => {
+            const div = document.createElement('div');
+            div.className = 'student-check-item';
+            div.innerHTML = `
+                <input type="checkbox" id="check_np_${s.id}" value="${s.id}">
+                <label for="check_np_${s.id}" style="cursor:pointer; flex:1;">${s.name}</label>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function saveLesson(e) {
+        e.preventDefault();
+        const activeClass = getActiveClass();
+        if (!activeClass) return;
+
+        const id = document.getElementById('lessonId').value;
+        const date = document.getElementById('lessonDate').value;
+        const quarter = document.getElementById('lessonQuarter').value;
+        const count = parseInt(document.getElementById('lessonCount').value);
+        const content = document.getElementById('lessonContent').value;
+
+        const nonParticipantIds = [];
+        const checkboxes = document.querySelectorAll('#nonParticipantsChecklist input[type="checkbox"]:checked');
+        checkboxes.forEach(cb => nonParticipantIds.push(cb.value));
+
+        if (id) {
+            const lesson = activeClass.lessons.find(l => l.id === id);
+            if (lesson) {
+                lesson.date = date;
+                lesson.quarter = quarter;
+                lesson.count = count;
+                lesson.content = content;
+                lesson.nonParticipantIds = nonParticipantIds;
+            }
+        } else {
+            activeClass.lessons.push({
+                id: 'l_' + Date.now(),
+                date,
+                quarter,
+                count,
+                content,
+                nonParticipantIds
+            });
+        }
+
+        saveData();
+        resetLessonForm();
+        renderLessonHistory();
+        renderActiveTabData();
+    }
+
+    function renderLessonHistory() {
+        const activeClass = getActiveClass();
+        const tbody = document.getElementById('lessonHistoryTable');
+        tbody.innerHTML = '';
+        if (!activeClass) return;
+
+        activeClass.lessons.forEach(l => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${l.date}</td>
+                <td>${l.quarter}º Trim</td>
+                <td>${l.count}</td>
+                <td>${l.content}</td>
+                <td>${l.nonParticipantIds ? l.nonParticipantIds.length : 0} alunos</td>
+                <td>
+                    <button class="btn btn-warning" style="padding: 2px 6px; font-size:0.75rem;" onclick="editLesson('${l.id}')">Editar</button>
+                    <button class="btn btn-danger" style="padding: 2px 6px; font-size:0.75rem;" onclick="deleteLesson('${l.id}')">Excluir</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function editLesson(id) {
+        const activeClass = getActiveClass();
+        if (!activeClass) return;
+        const l = activeClass.lessons.find(item => item.id === id);
+        if (l) {
+            document.getElementById('lessonId').value = l.id;
+            document.getElementById('lessonDate').value = l.date;
+            document.getElementById('lessonQuarter').value = l.quarter;
+            document.getElementById('lessonCount').value = l.count;
+            document.getElementById('lessonContent').value = l.content;
+
+            renderNonParticipantsChecklist();
+            if (l.nonParticipantIds) {
+                l.nonParticipantIds.forEach(studentId => {
+                    const cb = document.getElementById(`check_np_${studentId}`);
+                    if (cb) cb.checked = true;
+                });
+            }
+        }
+    }
+
+    function resetLessonForm() {
+        document.getElementById('lessonForm').reset();
+        document.getElementById('lessonId').value = '';
+        renderNonParticipantsChecklist();
+    }
+
+    function deleteLesson(id) {
+        const activeClass = getActiveClass();
+        if (activeClass && confirm("Deseja excluir esta aula?")) {
+            activeClass.lessons = activeClass.lessons.filter(l => l.id !== id);
+            saveData();
+            renderLessonHistory();
+            renderActiveTabData();
+        }
+    }
+
+    // --- CÁLCULO DE DESCONTOS E AVALIAÇÕES ---
+
+    function calculateParticipationLoss(studentId, quarter) {
+        const activeClass = getActiveClass();
+        if (!activeClass) return 0;
+
+        let totalLoss = 0;
+        activeClass.lessons.forEach(l => {
+            if (l.quarter.toString() === quarter.toString() && l.nonParticipantIds.includes(studentId)) {
+                totalLoss += l.count * 0.5;
+            }
+        });
+        return totalLoss;
+    }
+
+    function renderEvalInputs() {
+        const activeClass = getActiveClass();
+        const quarter = document.getElementById('evalQuarterSelect').value;
+        const thead = document.getElementById('evalTableHead');
+        const tbody = document.getElementById('evalTableBody');
+        const notice = document.getElementById('rulesNotice');
+
+        thead.innerHTML = '';
+        tbody.innerHTML = '';
+        if (!activeClass) return;
+
+        let noticeText = "";
+        let columns = [];
+
+        if (activeClass.level === 'fund2' || activeClass.level === 'ano5') {
+            noticeText = activeClass.level === 'ano5' 
+                ? "Regra 5º Ano (Moldes do 6º Ano): Participação (10 pts base) menos descontos. Outros trabalhos/provas."
+                : "Regra Fundamental 02 (6º ao 8º Ano): Participação (10 pts base) menos descontos. Outros trabalhos/provas.";
+            columns = [{ key: 'prat', label: 'Nota Prática/AVAL' }];
+        } else if (activeClass.level === 'ano9') {
+            noticeText = "Regra 9º Ano: Avaliação Prática + Prova Teórica.";
+            columns = [{ key: 'prat', label: 'Prática' }, { key: 'teor', label: 'Teórica' }];
+        } else {
+            noticeText = "Regra Ensino Médio: Avaliação Continuada + Projeto Integrado.";
+            columns = [{ key: 'cont', label: 'Continuada' }, { key: 'proj', label: 'Projeto' }];
+        }
+
+        notice.textContent = noticeText;
+
+        let trHead = `<tr><th>Aluno</th><th>Desconto de Participação (Auto)</th>`;
+        columns.forEach(c => trHead += `<th>${c.label}</th>`);
+        trHead += `</tr>`;
+        thead.innerHTML = trHead;
+
+        const qKey = 'q' + quarter;
+        const extraData = activeClass.extraGrades[qKey] || {};
+
+        activeClass.students.forEach(s => {
+            const loss = calculateParticipationLoss(s.id, quarter);
+            const sGrades = extraData[s.id] || {};
+
+            let tr = `<tr><td><strong>${s.name}</strong></td><td><span class="badge badge-danger">-${loss.toFixed(1)}</span></td>`;
+            columns.forEach(c => {
+                const val = sGrades[c.key] !== undefined ? sGrades[c.key] : '';
+                tr += `<td><input type="number" step="0.1" min="0" max="10" class="eval-input" data-student="${s.id}" data-key="${c.key}" value="${val}" style="width:80px; padding:4px;"></td>`;
+            });
+            tr += `</tr>`;
+            tbody.innerHTML += tr;
+        });
+    }
+
+    function saveExtraEvaluations() {
+        const activeClass = getActiveClass();
+        if (!activeClass) return;
+
+        const quarter = document.getElementById('evalQuarterSelect').value;
+        const qKey = 'q' + quarter;
+
+        if (!activeClass.extraGrades[qKey]) activeClass.extraGrades[qKey] = {};
+
+        const inputs = document.querySelectorAll('.eval-input');
+        inputs.forEach(inp => {
+            const studentId = inp.getAttribute('data-student');
+            const key = inp.getAttribute('data-key');
+            const val = inp.value !== '' ? parseFloat(inp.value) : '';
+
+            if (!activeClass.extraGrades[qKey][studentId]) {
+                activeClass.extraGrades[qKey][studentId] = {};
+            }
+            activeClass.extraGrades[qKey][studentId][key] = val;
+        });
+
+        saveData();
+        alert("Notas do " + quarter + "º Trimestre salvas com sucesso!");
+        renderActiveTabData();
+    }
+
+    // --- TABELAS DE DETALHAMENTO DOS TRIMESTRES ---
+
+    function calculateQuarterGrade(studentId, quarter) {
+        const activeClass = getActiveClass();
+        if (!activeClass) return 0;
+
+        const loss = calculateParticipationLoss(studentId, quarter);
+        const basePart = Math.max(0, 10 - loss);
+        const qKey = 'q' + quarter;
+        const extra = (activeClass.extraGrades[qKey] && activeClass.extraGrades[qKey][studentId]) ? activeClass.extraGrades[qKey][studentId] : {};
+
+        if (activeClass.level === 'fund2' || activeClass.level === 'ano5') {
+            const prat = extra.prat !== undefined && extra.prat !== '' ? parseFloat(extra.prat) : 10;
+            return Math.min(10, (basePart + prat) / 2);
+        } else if (activeClass.level === 'ano9') {
+            const prat = extra.prat !== undefined && extra.prat !== '' ? parseFloat(extra.prat) : 10;
+            const teor = extra.teor !== undefined && extra.teor !== '' ? parseFloat(extra.teor) : 10;
+            return Math.min(10, (basePart * 0.4) + (prat * 0.3) + (teor * 0.3));
+        } else {
+            const cont = extra.cont !== undefined && extra.cont !== '' ? parseFloat(extra.cont) : 10;
+            const proj = extra.proj !== undefined && extra.proj !== '' ? parseFloat(extra.proj) : 10;
+            return Math.min(10, (basePart * 0.3) + (cont * 0.4) + (proj * 0.3));
+        }
+    }
+
+    function renderQuarterTable(quarter) {
+        const activeClass = getActiveClass();
+        const container = document.getElementById(`table-q${quarter}-container`);
+        if (!container || !activeClass) return;
+
+        let html = `
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Aluno</th>
+                        <th>Perdas p/ Não Part.</th>
+                        <th>Nota de Partic. (Base 10)</th>
+                        <th>Média do Trimestre</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        activeClass.students.forEach((s, idx) => {
+            const loss = calculateParticipationLoss(s.id, quarter);
+            const partGrade = Math.max(0, 10 - loss);
+            const finalQuarterGrade = calculateQuarterGrade(s.id, quarter);
+
+            html += `
+                <tr>
+                    <td>${idx + 1}</td>
+                    <td>${s.name}</td>
+                    <td><span class="badge badge-danger">-${loss.toFixed(1)}</span></td>
+                    <td>${partGrade.toFixed(1)}</td>
+                    <td><strong>${finalQuarterGrade.toFixed(1)}</strong></td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+    }
+
+    // --- TABELA DE MÉDIAS E FINAIS ---
+
+    function renderMediasTable() {
+        const activeClass = getActiveClass();
+        const container = document.getElementById('table-medias-container');
+        if (!container || !activeClass) return;
+
+        let html = `
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Aluno</th>
+                        <th>1º Trimestre</th>
+                        <th>2º Trimestre</th>
+                        <th>3º Trimestre</th>
+                        <th>Média Anual</th>
+                        <th>Situação</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        activeClass.students.forEach(s => {
+            const q1 = calculateQuarterGrade(s.id, 1);
+            const q2 = calculateQuarterGrade(s.id, 2);
+            const q3 = calculateQuarterGrade(s.id, 3);
+            const finalAvg = (q1 + q2 + q3) / 3;
+
+            const rec = activeClass.recovery || {};
+            const recAnnual = rec.annual && rec.annual[s.id] !== undefined ? parseFloat(rec.annual[s.id]) : null;
+
+            const effectiveFinal = (recAnnual !== null && !isNaN(recAnnual)) ? Math.max(finalAvg, recAnnual) : finalAvg;
+            const status = effectiveFinal >= 6.0 ? '<span class="badge badge-success">Aprovado</span>' : '<span class="badge badge-danger">Em Recuperação</span>';
+
+            html += `
+                <tr>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${q1.toFixed(1)}</td>
+                    <td>${q2.toFixed(1)}</td>
+                    <td>${q3.toFixed(1)}</td>
+                    <td><strong>${effectiveFinal.toFixed(1)}</strong></td>
+                    <td>${status}</td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+    }
+
+    // --- TABELA DE RECUPERAÇÃO ---
+
+    function renderRecoveryTable() {
+        const activeClass = getActiveClass();
+        const tbody = document.getElementById('recoveryTableBody');
+        if (!tbody || !activeClass) return;
+
+        tbody.innerHTML = '';
+        const rec = activeClass.recovery || { q1: {}, q2: {}, q3: {}, annual: {} };
+
+        activeClass.students.forEach(s => {
+            const q1 = calculateQuarterGrade(s.id, 1);
+            const q2 = calculateQuarterGrade(s.id, 2);
+            const q3 = calculateQuarterGrade(s.id, 3);
+            const annual = (q1 + q2 + q3) / 3;
+
+            const recQ1 = rec.q1 && rec.q1[s.id] !== undefined ? rec.q1[s.id] : '';
+            const recQ2 = rec.q2 && rec.q2[s.id] !== undefined ? rec.q2[s.id] : '';
+            const recQ3 = rec.q3 && rec.q3[s.id] !== undefined ? rec.q3[s.id] : '';
+            const recAnnual = rec.annual && rec.annual[s.id] !== undefined ? rec.annual[s.id] : '';
+
+            const finalAnnual = (recAnnual !== '' && !isNaN(parseFloat(recAnnual))) ? Math.max(annual, parseFloat(recAnnual)) : annual;
+            const status = finalAnnual >= 6.0 ? '<span class="badge badge-success">Aprovado</span>' : '<span class="badge badge-danger">Reprovado</span>';
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${s.name}</strong></td>
+                <td>${q1.toFixed(1)}</td>
+                <td><input type="number" step="0.1" class="rec-inp" data-type="q1" data-student="${s.id}" value="${recQ1}" style="width:60px;"></td>
+                <td>${q2.toFixed(1)}</td>
+                <td><input type="number" step="0.1" class="rec-inp" data-type="q2" data-student="${s.id}" value="${recQ2}" style="width:60px;"></td>
+                <td>${q3.toFixed(1)}</td>
+                <td><input type="number" step="0.1" class="rec-inp" data-type="q3" data-student="${s.id}" value="${recQ3}" style="width:60px;"></td>
+                <td><strong>${annual.toFixed(1)}</strong></td>
+                <td><input type="number" step="0.1" class="rec-inp" data-type="annual" data-student="${s.id}" value="${recAnnual}" style="width:60px;"></td>
+                <td>${status}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function saveRecoveryGrades() {
+        const activeClass = getActiveClass();
+        if (!activeClass) return;
+
+        if (!activeClass.recovery) {
+            activeClass.recovery = { q1: {}, q2: {}, q3: {}, annual: {} };
+        }
+
+        const inputs = document.querySelectorAll('.rec-inp');
+        inputs.forEach(inp => {
+            const type = inp.getAttribute('data-type');
+            const studentId = inp.getAttribute('data-student');
+            const val = inp.value !== '' ? parseFloat(inp.value) : '';
+
+            if (!activeClass.recovery[type]) activeClass.recovery[type] = {};
+            activeClass.recovery[type][studentId] = val;
+        });
+
+        saveData();
+        alert("Notas de Recuperação salvas!");
+        renderActiveTabData();
+    }
+
+    // --- RELATÓRIO DE IMPRESSÃO ---
+
+    function renderPrintReport() {
+        const activeClass = getActiveClass();
+        const container = document.getElementById('printTableContainer');
+        if (!container || !activeClass) return;
+
+        document.getElementById('printSchoolName').textContent = appData.schoolName || 'Colégio Estadual de Educação Física';
+        document.getElementById('printClassName').textContent = activeClass.name;
+        document.getElementById('printTeacherName').textContent = activeClass.teacher;
+
+        let html = `
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Aluno</th>
+                        <th>Média 1º T</th>
+                        <th>Média 2º T</th>
+                        <th>Média 3º T</th>
+                        <th>Média Anual</th>
+                        <th>Situação</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        activeClass.students.forEach(s => {
+            const q1 = calculateQuarterGrade(s.id, 1);
+            const q2 = calculateQuarterGrade(s.id, 2);
+            const q3 = calculateQuarterGrade(s.id, 3);
+            const annual = (q1 + q2 + q3) / 3;
+
+            const rec = activeClass.recovery || {};
+            const recAnnual = rec.annual && rec.annual[s.id] !== undefined ? parseFloat(rec.annual[s.id]) : null;
+            const finalAvg = (recAnnual !== null && !isNaN(recAnnual)) ? Math.max(annual, recAnnual) : annual;
+
+            html += `
+                <tr>
+                    <td>${s.name}</td>
+                    <td>${q1.toFixed(1)}</td>
+                    <td>${q2.toFixed(1)}</td>
+                    <td>${q3.toFixed(1)}</td>
+                    <td><strong>${finalAvg.toFixed(1)}</strong></td>
+                    <td>${finalAvg >= 6.0 ? 'Aprovado' : 'Retido/Recuperação'}</td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+    }
+</script>
+</body>
+</html>
