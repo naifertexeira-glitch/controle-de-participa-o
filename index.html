@@ -1,3 +1,620 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Controle de Notas - Educação Física</title>
+<style>
+:root {
+--bg-light: #e8f5e9;
+--primary-dark: #1b5e20;
+--primary-medium: #2e7d32;
+--primary-light: #4caf50;
+--accent-green: #81c784;
+--card-bg: #ffffff;
+--text-color: #2c3e50;
+--danger-red: #d32f2f;
+--warning-amber: #f57c00;
+--border-radius: 12px;
+--shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+background-color: var(--bg-light);
+color: var(--text-color);
+padding: 20px;
+min-height: 100vh;
+}
+.app-container {
+max-width: 1400px;
+margin: 0 auto;
+}
+header.school-header {
+background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
+color: white;
+padding: 20px 30px;
+border-radius: var(--border-radius);
+box-shadow: var(--shadow);
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 20px;
+flex-wrap: wrap;
+gap: 20px;
+}
+.header-brand {
+display: flex;
+align-items: center;
+gap: 20px;
+}
+.logo-container {
+width: 80px;
+height: 80px;
+background: white;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+border: 3px solid var(--accent-green);
+position: relative;
+cursor: pointer;
+}
+.logo-container img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+.logo-placeholder {
+font-size: 11px;
+color: var(--primary-dark);
+text-align: center;
+padding: 5px;
+font-weight: bold;
+}
+.school-info {
+display: flex;
+flex-direction: column;
+gap: 5px;
+}
+.school-info input {
+background: rgba(255, 255, 255, 0.15);
+border: 1px solid rgba(255, 255, 255, 0.3);
+color: white;
+font-size: 1.5rem;
+font-weight: bold;
+padding: 5px 10px;
+border-radius: 6px;
+}
+.school-info input::placeholder {
+color: rgba(255, 255, 255, 0.7);
+}
+.class-selector-area {
+display: flex;
+align-items: center;
+gap: 10px;
+background: rgba(255,255,255,0.1);
+padding: 10px 15px;
+border-radius: 8px;
+}
+.class-selector-area select {
+padding: 8px 12px;
+border-radius: 6px;
+border: none;
+font-weight: bold;
+color: var(--primary-dark);
+background: white;
+cursor: pointer;
+}
+nav.nav-tabs {
+display: flex;
+gap: 8px;
+overflow-x: auto;
+padding-bottom: 10px;
+margin-bottom: 20px;
+scrollbar-width: thin;
+}
+.nav-btn {
+background: #c8e6c9;
+color: var(--primary-dark);
+border: none;
+padding: 12px 18px;
+border-radius: 30px;
+font-weight: 600;
+font-size: 0.9rem;
+cursor: pointer;
+white-space: nowrap;
+transition: all 0.3s ease;
+box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.nav-btn:hover {
+background: var(--accent-green);
+color: white;
+transform: translateY(-2px);
+}
+.nav-btn.active {
+background: var(--primary-medium);
+color: white;
+box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+}
+.tab-content {
+display: none;
+background: var(--card-bg);
+padding: 25px;
+border-radius: var(--border-radius);
+box-shadow: var(--shadow);
+animation: fadeIn 0.3s ease-in-out;
+}
+.tab-content.active {
+display: block;
+}
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(5px); }
+to { opacity: 1; transform: translateY(0); }
+}
+h2.section-title {
+color: var(--primary-dark);
+margin-bottom: 20px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+border-bottom: 2px solid var(--bg-light);
+padding-bottom: 10px;
+}
+.grid-2 {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+gap: 20px;
+}
+.form-card {
+background: #f9fbf9;
+border: 1px solid #c8e6c9;
+padding: 20px;
+border-radius: var(--border-radius);
+margin-bottom: 20px;
+}
+.form-group {
+margin-bottom: 15px;
+}
+.form-group label {
+display: block;
+margin-bottom: 6px;
+font-weight: 600;
+color: var(--primary-dark);
+font-size: 0.9rem;
+}
+.form-group input, .form-group select, .form-group textarea {
+width: 100%;
+padding: 10px;
+border: 1px solid #a5d6a7;
+border-radius: 6px;
+font-size: 0.95rem;
+outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+border-color: var(--primary-medium);
+box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+.btn {
+padding: 10px 18px;
+border-radius: 8px;
+border: none;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s;
+display: inline-flex;
+align-items: center;
+gap: 6px;
+}
+.btn-primary { background: var(--primary-medium); color: white; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-danger { background: var(--danger-red); color: white; }
+.btn-danger:hover { background: #b71c1c; }
+.btn-warning { background: var(--warning-amber); color: white; }
+.btn-secondary { background: #9e9e9e; color: white; }
+
+
+.table-responsive {
+overflow-x: auto;
+margin-top: 15px;
+}
+table.custom-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 0.9rem;
+}
+table.custom-table th {
+background: var(--primary-dark);
+color: white;
+text-align: left;
+padding: 12px;
+font-weight: 600;
+}
+table.custom-table td {
+padding: 10px 12px;
+border-bottom: 1px solid #e0e0e0;
+}
+table.custom-table tbody tr:nth-child(even) {
+background-color: #f4fbf5;
+}
+table.custom-table tbody tr:hover {
+background-color: #e8f5e9;
+}
+.badge {
+padding: 4px 8px;
+border-radius: 4px;
+font-size: 0.8rem;
+font-weight: bold;
+}
+.badge-danger { background: #ffebee; color: var(--danger-red); }
+.badge-success { background: #e8f5e9; color: var(--primary-dark); }
+
+
+.student-check-item {
+display: flex;
+align-items: center;
+padding: 6px 8px;
+border-bottom: 1px solid #eee;
+border-radius: 4px;
+transition: background 0.2s;
+}
+.student-check-item:hover {
+background-color: #e8f5e9;
+}
+.student-check-item input[type="checkbox"] {
+width: 18px;
+height: 18px;
+margin-right: 10px;
+cursor: pointer;
+accent-color: var(--danger-red);
+}
+
+
+@media print {
+body { background: white; padding: 0; }
+header.school-header, nav.nav-tabs, .btn, .no-print { display: none !important; }
+.tab-content { display: none !important; box-shadow: none; padding: 0; }
+#tab-print { display: block !important; }
+.print-header { display: flex !important; align-items: center; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
+.print-header img { max-height: 70px; }
+table.custom-table th { background: #333 !important; color: white !important; }
+}
+.print-header { display: none; }
+</style>
+</head>
+<body>
+
+
+<div class="app-container">
+<header class="school-header">
+<div class="header-brand">
+<div class="logo-container" onclick="document.getElementById('logoInput').click();" title="Clique para alterar a logo">
+<img id="schoolLogo" src="" alt="" style="display:none;">
+<div id="logoPlaceholder" class="logo-placeholder">Inserir Logo</div>
+</div>
+<input type="file" id="logoInput" accept="image/*" style="display:none;" onchange="uploadLogo(event)">
+
+
+<div class="school-info">
+<input type="text" id="schoolNameInput" value="Colégio Estadual de Educação Física" onchange="saveSchoolName()" placeholder="Nome da Escola / Colégio">
+<span style="font-size: 0.85rem; opacity: 0.9;">Sistema Integrado de Gestão & Avaliação em Ed. Física</span>
+</div>
+</div>
+
+
+<div class="class-selector-area">
+<label for="currentClassSelect" style="color:white; font-size: 0.9rem; font-weight:bold;">Turma Ativa:</label>
+<select id="currentClassSelect" onchange="switchClass()"></select>
+<span id="syncStatus" style="font-size:0.75rem; opacity:0.85; margin-left:6px;" title="Status da conexão com o banco de dados">☁️ ...</span>
+</div>
+</header>
+
+
+<nav class="nav-tabs">
+<button class="nav-btn active" onclick="openTab('tab-turmas', this)">🏫 Turmas & Alunos</button>
+<button class="nav-btn" onclick="openTab('tab-aulas', this)">📝 Registro de Aulas</button>
+<button class="nav-btn" onclick="openTab('tab-avaliacoes', this)">📊 Avaliações do Trimestre</button>
+<button class="nav-btn" onclick="openTab('tab-q1', this)">🗓️ 1º Trimestre</button>
+<button class="nav-btn" onclick="openTab('tab-q2', this)">🗓️ 2º Trimestre</button>
+<button class="nav-btn" onclick="openTab('tab-q3', this)">🗓️ 3º Trimestre</button>
+<button class="nav-btn" onclick="openTab('tab-medias', this)">📈 Médias & Finais</button>
+<button class="nav-btn" onclick="openTab('tab-recuperacao', this)">🔄 Recuperação</button>
+<button class="nav-btn" onclick="openTab('tab-print', this)">🖨️ Impressão</button>
+</nav>
+
+
+<!-- ABA 1: TURMAS E ALUNOS -->
+<div id="tab-turmas" class="tab-content active">
+<h2 class="section-title">Gerenciamento de Turmas e Alunos</h2>
+<div class="grid-2">
+<div>
+<div class="form-card">
+<h3>Cadastrar / Editar Turma</h3>
+<form id="classForm" onsubmit="saveClass(event)" style="margin-top:15px;">
+<input type="hidden" id="classId">
+<div class="form-group">
+<label>Nome da Turma:</label>
+<input type="text" id="className" placeholder="Ex: 5º Ano A, 6º Ano A, 9º Ano B, 1º Ano EM" required>
+</div>
+<div class="form-group">
+<label>Nome do Professor(a):</label>
+<input type="text" id="teacherName" placeholder="Prof. João Silva" required>
+</div>
+<div class="form-group">
+<label>Nível Ensino / Regra de Notas:</label>
+<select id="classLevel" required>
+<option value="ano5">5º Ano (Moldes do 6º Ano)</option>
+<option value="fund2">Fundamental 02 (6º ao 8º Ano)</option>
+<option value="ano9">9º Ano (Fundamental 02)</option>
+<option value="em1">Ensino Médio (1º Ano)</option>
+</select>
+</div>
+<div style="display:flex; gap:10px;">
+<button type="submit" class="btn btn-primary">Salvar Turma</button>
+<button type="button" class="btn btn-secondary" onclick="resetClassForm()">Limpar</button>
+</div>
+</form>
+</div>
+
+
+<div class="form-card">
+<h3>Turmas Cadastradas</h3>
+<div class="table-responsive">
+<table class="custom-table">
+<thead>
+<tr>
+<th>Turma</th>
+<th>Professor</th>
+<th>Nível</th>
+<th>Ações</th>
+</tr>
+</thead>
+<tbody id="classListTable"></tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+<div>
+<div class="form-card">
+<h3>Cadastro de Alunos em Lote (Turma Ativa)</h3>
+<p style="font-size:0.85rem; color:#666; margin-bottom:10px;">
+Cole a lista com os nomes dos alunos (um por linha) para cadastrar todos de uma vez.
+</p>
+<div class="form-group">
+<textarea id="bulkStudentsText" rows="8" placeholder="Ana Silva&#10;Bruno Santos&#10;Carlos Eduardo..."></textarea>
+</div>
+<button type="button" class="btn btn-primary" onclick="importBulkStudents()">Importar Alunos para a Turma Ativa</button>
+</div>
+
+
+<div class="form-card">
+<h3>Lista de Alunos da Turma Ativa</h3>
+<div class="table-responsive">
+<table class="custom-table">
+<thead>
+<tr>
+<th>#</th>
+<th>Nome do Aluno</th>
+<th>Ações</th>
+</tr>
+</thead>
+<tbody id="studentListTable"></tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- ABA 2: REGISTRO DE AULAS -->
+<div id="tab-aulas" class="tab-content">
+<h2 class="section-title">Registro de Aula e Marcar Sem Participação</h2>
+<div class="grid-2">
+<div>
+<div class="form-card">
+<h3 id="lessonFormTitle">Lançar Nova Aula</h3>
+<form id="lessonForm" onsubmit="saveLesson(event)" style="margin-top:15px;">
+<input type="hidden" id="lessonId">
+
+
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+<div class="form-group">
+<label>Data da Aula:</label>
+<input type="date" id="lessonDate" required>
+</div>
+<div class="form-group">
+<label>Trimestre:</label>
+<select id="lessonQuarter" required>
+<option value="1">1º Trimestre</option>
+<option value="2">2º Trimestre</option>
+<option value="3">3º Trimestre</option>
+</select>
+</div>
+</div>
+
+
+<div class="form-group">
+<label>Quantidade de Aulas no Dia:</label>
+<select id="lessonCount" required>
+<option value="1">1 Aula (Desconto de -0,5 por não participação)</option>
+<option value="2">2 Aulas Duplas (Desconto de -1,0 por não participação)</option>
+</select>
+</div>
+
+
+<div class="form-group">
+<label>Tema / Conteúdo da Aula:</label>
+<input type="text" id="lessonContent" placeholder="Ex: Futsal - Passe e Recepção" required>
+</div>
+
+
+<div class="form-group">
+<label style="color:var(--danger-red);">Selecione QUEM NÃO PARTICIPOU desta aula:</label>
+<p style="font-size:0.8rem; color:#666; margin-bottom: 8px;">
+O sistema aplicará o desconto automaticamente nas abas dos trimestres.
+</p>
+
+
+<input type="text" id="searchStudentInput" placeholder="🔍 Buscar aluno pelo nome..." onkeyup="filterStudentChecklist()" style="margin-bottom:8px; padding:6px 10px; font-size:0.85rem;">
+
+
+<div id="nonParticipantsChecklist" style="max-height: 220px; overflow-y: auto; background: white; padding: 8px; border: 1px solid #a5d6a7; border-radius: 6px;"></div>
+</div>
+
+
+<div style="display:flex; gap:10px;">
+<button type="submit" class="btn btn-primary">Salvar Aula</button>
+<button type="button" class="btn btn-secondary" onclick="resetLessonForm()">Limpar / Cancelar</button>
+</div>
+</form>
+</div>
+</div>
+
+
+<div>
+<div class="form-card">
+<h3>Histórico de Aulas Registradas</h3>
+<div class="table-responsive">
+<table class="custom-table">
+<thead>
+<tr>
+<th>Data</th>
+<th>Trim.</th>
+<th>Aulas</th>
+<th>Tema / Conteúdo</th>
+<th>Sem Part.</th>
+<th>Ações</th>
+</tr>
+</thead>
+<tbody id="lessonHistoryTable"></tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- ABA 3: LANÇAMENTO DE NOTAS COMPLEMENTARES -->
+<div id="tab-avaliacoes" class="tab-content">
+<h2 class="section-title">Lançamento de Notas Avaliativas</h2>
+<p style="margin-bottom:15px;">Selecione o Trimestre e digite os valores dos campos aplicáveis para a turma ativa.</p>
+
+
+<div style="margin-bottom: 15px;">
+<label style="font-weight:bold;">Selecione o Trimestre: </label>
+<select id="evalQuarterSelect" onchange="renderEvalInputs()" style="padding:6px 12px; border-radius:6px; border:1px solid #999;">
+<option value="1">1º Trimestre</option>
+<option value="2">2º Trimestre</option>
+<option value="3">3º Trimestre</option>
+</select>
+</div>
+
+
+<div id="rulesNotice" class="badge badge-success" style="display:block; padding:10px; margin-bottom:15px; font-size:0.9rem; font-weight:normal;"></div>
+
+
+<div class="table-responsive">
+<table class="custom-table">
+<thead id="evalTableHead"></thead>
+<tbody id="evalTableBody"></tbody>
+</table>
+</div>
+<button type="button" class="btn btn-primary" style="margin-top:15px;" onclick="saveExtraEvaluations()">Salvar Notas do Trimestre</button>
+</div>
+
+
+<!-- ABA 4: 1º TRIMESTRE -->
+<div id="tab-q1" class="tab-content">
+<h2 class="section-title">Detalhamento - 1º Trimestre</h2>
+<div id="table-q1-container" class="table-responsive"></div>
+</div>
+
+
+<!-- ABA 5: 2º TRIMESTRE -->
+<div id="tab-q2" class="tab-content">
+<h2 class="section-title">Detalhamento - 2º Trimestre</h2>
+<div id="table-q2-container" class="table-responsive"></div>
+</div>
+
+
+<!-- ABA 6: 3º TRIMESTRE -->
+<div id="tab-q3" class="tab-content">
+<h2 class="section-title">Detalhamento - 3º Trimestre</h2>
+<div id="table-q3-container" class="table-responsive"></div>
+</div>
+
+
+<!-- ABA 7: MÉDIAS & FINAIS -->
+<div id="tab-medias" class="tab-content">
+<h2 class="section-title">Resumo das Médias Trimestrais e Média Final Anual</h2>
+<div id="table-medias-container" class="table-responsive"></div>
+</div>
+
+
+<!-- ABA 8: RECUPERAÇÃO -->
+<div id="tab-recuperacao" class="tab-content">
+<h2 class="section-title">Controle de Recuperação Trimestral e Anual (Nota &lt; 6,0)</h2>
+<p style="margin-bottom:15px;">Alunos com média inferior a 6,0 necessitam de lançamento de recuperação.</p>
+<div class="table-responsive">
+<table class="custom-table">
+<thead>
+<tr>
+<th>Aluno</th>
+<th>Média 1º T</th>
+<th>Rec. 1º T</th>
+<th>Média 2º T</th>
+<th>Rec. 2º T</th>
+<th>Média 3º T</th>
+<th>Rec. 3º T</th>
+<th>Média Anual</th>
+<th>Rec. Anual</th>
+<th>Situação Final</th>
+</tr>
+</thead>
+<tbody id="recoveryTableBody"></tbody>
+</table>
+</div>
+<button type="button" class="btn btn-primary" style="margin-top:15px;" onclick="saveRecoveryGrades()">Salvar Notas de Recuperação</button>
+</div>
+
+
+<!-- ABA 9: IMPRESSÃO -->
+<div id="tab-print" class="tab-content">
+<div class="no-print" style="margin-bottom: 20px;">
+<button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Imprimir Relatório Oficial</button>
+</div>
+
+
+<div class="print-header">
+<img id="printLogo" src="" alt="Logo" style="display:none; max-height: 60px;">
+<div>
+<h2 id="printSchoolName" style="margin:0;">Nome do Colégio</h2>
+<p style="margin:0; font-size:0.9rem;">Relatório de Desempenho e Frequência em Educação Física</p>
+</div>
+<div style="text-align:right; font-size:0.85rem;">
+<p><strong>Turma:</strong> <span id="printClassName">-</span></p>
+<p><strong>Professor:</strong> <span id="printTeacherName">-</span></p>
+</div>
+</div>
+
+
+<h3>Boletim Geral de Aulas, Faltas e Médias</h3>
+<div id="printTableContainer" class="table-responsive" style="margin-top:15px;"></div>
+</div>
+</div>
+
 <script>
     let appData = {
         schoolName: "Colégio Estadual de Educação Física",
@@ -860,3 +1477,4 @@
 </script>
 </body>
 </html>
+
