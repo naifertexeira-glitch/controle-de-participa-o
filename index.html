@@ -221,7 +221,6 @@ gap: 6px;
 .btn-warning { background: var(--warning-amber); color: white; }
 .btn-secondary { background: #9e9e9e; color: white; }
 
-
 .table-responsive {
 overflow-x: auto;
 margin-top: 15px;
@@ -257,7 +256,6 @@ font-weight: bold;
 .badge-danger { background: #ffebee; color: var(--danger-red); }
 .badge-success { background: #e8f5e9; color: var(--primary-dark); }
 
-
 .student-check-item {
 display: flex;
 align-items: center;
@@ -277,7 +275,6 @@ cursor: pointer;
 accent-color: var(--danger-red);
 }
 
-
 @media print {
 body { background: white; padding: 0; }
 header.school-header, nav.nav-tabs, .btn, .no-print { display: none !important; }
@@ -292,7 +289,6 @@ table.custom-table th { background: #333 !important; color: white !important; }
 </head>
 <body>
 
-
 <div class="app-container">
 <header class="school-header">
 <div class="header-brand">
@@ -302,13 +298,11 @@ table.custom-table th { background: #333 !important; color: white !important; }
 </div>
 <input type="file" id="logoInput" accept="image/*" style="display:none;" onchange="uploadLogo(event)">
 
-
 <div class="school-info">
 <input type="text" id="schoolNameInput" value="Colégio Estadual de Educação Física" onchange="saveSchoolName()" placeholder="Nome da Escola / Colégio">
 <span style="font-size: 0.85rem; opacity: 0.9;">Sistema Integrado de Gestão & Avaliação em Ed. Física</span>
 </div>
 </div>
-
 
 <div class="class-selector-area">
 <label for="currentClassSelect" style="color:white; font-size: 0.9rem; font-weight:bold;">Turma Ativa:</label>
@@ -316,7 +310,6 @@ table.custom-table th { background: #333 !important; color: white !important; }
 <span id="syncStatus" style="font-size:0.75rem; opacity:0.85; margin-left:6px;" title="Status da conexão com o banco de dados">☁️ ...</span>
 </div>
 </header>
-
 
 <nav class="nav-tabs">
 <button class="nav-btn active" onclick="openTab('tab-turmas', this)">🏫 Turmas & Alunos</button>
@@ -329,7 +322,6 @@ table.custom-table th { background: #333 !important; color: white !important; }
 <button class="nav-btn" onclick="openTab('tab-recuperacao', this)">🔄 Recuperação</button>
 <button class="nav-btn" onclick="openTab('tab-print', this)">🖨️ Impressão</button>
 </nav>
-
 
 <!-- ABA 1: TURMAS E ALUNOS -->
 <div id="tab-turmas" class="tab-content active">
@@ -364,7 +356,6 @@ table.custom-table th { background: #333 !important; color: white !important; }
 </form>
 </div>
 
-
 <div class="form-card">
 <h3>Turmas Cadastradas</h3>
 <div class="table-responsive">
@@ -383,7 +374,6 @@ table.custom-table th { background: #333 !important; color: white !important; }
 </div>
 </div>
 
-
 <div>
 <div class="form-card">
 <h3>Cadastro de Alunos em Lote (Turma Ativa)</h3>
@@ -395,7 +385,6 @@ Cole a lista com os nomes dos alunos (um por linha) para cadastrar todos de uma 
 </div>
 <button type="button" class="btn btn-primary" onclick="importBulkStudents()">Importar Alunos para a Turma Ativa</button>
 </div>
-
 
 <div class="form-card">
 <h3>Lista de Alunos da Turma Ativa</h3>
@@ -416,7 +405,6 @@ Cole a lista com os nomes dos alunos (um por linha) para cadastrar todos de uma 
 </div>
 </div>
 
-
 <!-- ABA 2: REGISTRO DE AULAS -->
 <div id="tab-aulas" class="tab-content">
 <h2 class="section-title">Registro de Aula e Marcar Sem Participação</h2>
@@ -426,7 +414,6 @@ Cole a lista com os nomes dos alunos (um por linha) para cadastrar todos de uma 
 <h3 id="lessonFormTitle">Lançar Nova Aula</h3>
 <form id="lessonForm" onsubmit="saveLesson(event)" style="margin-top:15px;">
 <input type="hidden" id="lessonId">
-
 
 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
 <div class="form-group">
@@ -443,7 +430,6 @@ Cole a lista com os nomes dos alunos (um por linha) para cadastrar todos de uma 
 </div>
 </div>
 
-
 <div class="form-group">
 <label>Quantidade de Aulas no Dia:</label>
 <select id="lessonCount" required>
@@ -452,12 +438,10 @@ Cole a lista com os nomes dos alunos (um por linha) para cadastrar todos de uma 
 </select>
 </div>
 
-
 <div class="form-group">
 <label>Tema / Conteúdo da Aula:</label>
 <input type="text" id="lessonContent" placeholder="Ex: Futsal - Passe e Recepção" required>
 </div>
-
 
 <div class="form-group">
 <label style="color:var(--danger-red);">Selecione QUEM NÃO PARTICIPOU desta aula:</label>
@@ -465,13 +449,10 @@ Cole a lista com os nomes dos alunos (um por linha) para cadastrar todos de uma 
 O sistema aplicará o desconto automaticamente nas abas dos trimestres.
 </p>
 
-
 <input type="text" id="searchStudentInput" placeholder="🔍 Buscar aluno pelo nome..." onkeyup="filterStudentChecklist()" style="margin-bottom:8px; padding:6px 10px; font-size:0.85rem;">
-
 
 <div id="nonParticipantsChecklist" style="max-height: 220px; overflow-y: auto; background: white; padding: 8px; border: 1px solid #a5d6a7; border-radius: 6px;"></div>
 </div>
-
 
 <div style="display:flex; gap:10px;">
 <button type="submit" class="btn btn-primary">Salvar Aula</button>
@@ -480,7 +461,6 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
 </form>
 </div>
 </div>
-
 
 <div>
 <div class="form-card">
@@ -505,12 +485,10 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
 </div>
 </div>
 
-
 <!-- ABA 3: LANÇAMENTO DE NOTAS COMPLEMENTARES -->
 <div id="tab-avaliacoes" class="tab-content">
 <h2 class="section-title">Lançamento de Notas Avaliativas</h2>
 <p style="margin-bottom:15px;">Selecione o Trimestre e digite os valores dos campos aplicáveis para a turma ativa.</p>
-
 
 <div style="margin-bottom: 15px;">
 <label style="font-weight:bold;">Selecione o Trimestre: </label>
@@ -521,9 +499,7 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
 </select>
 </div>
 
-
 <div id="rulesNotice" class="badge badge-success" style="display:block; padding:10px; margin-bottom:15px; font-size:0.9rem; font-weight:normal;"></div>
-
 
 <div class="table-responsive">
 <table class="custom-table">
@@ -534,13 +510,11 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
 <button type="button" class="btn btn-primary" style="margin-top:15px;" onclick="saveExtraEvaluations()">Salvar Notas do Trimestre</button>
 </div>
 
-
 <!-- ABA 4: 1º TRIMESTRE -->
 <div id="tab-q1" class="tab-content">
 <h2 class="section-title">Detalhamento - 1º Trimestre</h2>
 <div id="table-q1-container" class="table-responsive"></div>
 </div>
-
 
 <!-- ABA 5: 2º TRIMESTRE -->
 <div id="tab-q2" class="tab-content">
@@ -548,20 +522,17 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
 <div id="table-q2-container" class="table-responsive"></div>
 </div>
 
-
 <!-- ABA 6: 3º TRIMESTRE -->
 <div id="tab-q3" class="tab-content">
 <h2 class="section-title">Detalhamento - 3º Trimestre</h2>
 <div id="table-q3-container" class="table-responsive"></div>
 </div>
 
-
 <!-- ABA 7: MÉDIAS & FINAIS -->
 <div id="tab-medias" class="tab-content">
 <h2 class="section-title">Resumo das Médias Trimestrais e Média Final Anual</h2>
 <div id="table-medias-container" class="table-responsive"></div>
 </div>
-
 
 <!-- ABA 8: RECUPERAÇÃO -->
 <div id="tab-recuperacao" class="tab-content">
@@ -589,13 +560,11 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
 <button type="button" class="btn btn-primary" style="margin-top:15px;" onclick="saveRecoveryGrades()">Salvar Notas de Recuperação</button>
 </div>
 
-
 <!-- ABA 9: IMPRESSÃO -->
 <div id="tab-print" class="tab-content">
 <div class="no-print" style="margin-bottom: 20px;">
 <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Imprimir Relatório Oficial</button>
 </div>
-
 
 <div class="print-header">
 <img id="printLogo" src="" alt="Logo" style="display:none; max-height: 60px;">
@@ -608,7 +577,6 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
 <p><strong>Professor:</strong> <span id="printTeacherName">-</span></p>
 </div>
 </div>
-
 
 <h3>Boletim Geral de Aulas, Faltas e Médias</h3>
 <div id="printTableContainer" class="table-responsive" style="margin-top:15px;"></div>
@@ -657,7 +625,6 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
     function saveData() {
         const payload = JSON.stringify(appData);
 
-        // Backup local garantido sempre
         try {
             localStorage.setItem('pe_app_data_v2', payload);
         } catch(e) {
@@ -690,7 +657,7 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
             if (pendingSavePayload) {
                 const next = pendingSavePayload;
                 pendingSavePayload = null;
-                saveData(); // Reprocessa salvamento pendente de forma segura
+                saveData();
             }
         });
     }
@@ -699,7 +666,6 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
         let loadedFromServer = false;
         let serverHasData = false;
 
-        // 1. Tenta carregar do servidor com tratamento de erros rigoroso
         try {
             const res = await fetch('/api/state');
             if (res.ok) {
@@ -710,14 +676,11 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
                     serverHasData = true;
                     setSyncStatus('ok');
                 }
-            } else {
-                console.warn(`Servidor respondeu com status ${res.status}. Usando armazenamento local.`);
             }
         } catch (e) {
-            console.warn("API de nuvem indisponível ou em ambiente estático. Erro:", e.message);
+            console.warn("API de nuvem indisponível. Erro:", e.message);
         }
 
-        // 2. Se a nuvem falhar, carrega os dados locais do navegador
         if (!loadedFromServer) {
             setSyncStatus('offline');
             try {
@@ -733,7 +696,6 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
             }
         }
 
-        // 3. Normalização dos dados da aplicação
         if (!appData.classes) appData.classes = [];
 
         appData.classes.forEach(c => {
@@ -743,7 +705,6 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
             if (!c.recovery) c.recovery = { q1: {}, q2: {}, q3: {}, annual: {} };
         });
 
-        // Caso inicial: Nenhuma turma cadastrada
         if (appData.classes.length === 0) {
             const defaultClass = {
                 id: 'c1',
@@ -768,7 +729,6 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
             appData.currentClassId = appData.classes[0].id;
         }
 
-        // Preenchimento de inputs da interface
         const nameInput = document.getElementById('schoolNameInput');
         if (nameInput) nameInput.value = appData.schoolName || 'Colégio Estadual de Educação Física';
         
@@ -1050,26 +1010,30 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
     function saveLesson(e) {
         e.preventDefault();
         const activeClass = getActiveClass();
-        if (!activeClass) return;
+        if (!activeClass) return alert("Crie uma turma ativa primeiro!");
 
         const id = document.getElementById('lessonId').value;
         const date = document.getElementById('lessonDate').value;
-        const quarter = document.getElementById('lessonQuarter').value;
-        const count = parseInt(document.getElementById('lessonCount').value) || 1;
+        const quarter = parseInt(document.getElementById('lessonQuarter').value);
+        const count = parseFloat(document.getElementById('lessonCount').value);
         const content = document.getElementById('lessonContent').value;
 
-        const nonParticipantIds = [];
-        const checkboxes = document.querySelectorAll('#nonParticipantsChecklist input[type="checkbox"]:checked');
-        checkboxes.forEach(cb => nonParticipantIds.push(cb.value));
+        const nonParticipants = [];
+        activeClass.students.forEach(s => {
+            const chk = document.getElementById(`check_np_${s.id}`);
+            if (chk && chk.checked) {
+                nonParticipants.push(s.id);
+            }
+        });
 
         if (id) {
-            const lesson = activeClass.lessons.find(l => l.id === id);
-            if (lesson) {
-                lesson.date = date;
-                lesson.quarter = quarter;
-                lesson.count = count;
-                lesson.content = content;
-                lesson.nonParticipantIds = nonParticipantIds;
+            const l = activeClass.lessons.find(item => item.id === id);
+            if (l) {
+                l.date = date;
+                l.quarter = quarter;
+                l.count = count;
+                l.content = content;
+                l.nonParticipants = nonParticipants;
             }
         } else {
             activeClass.lessons.push({
@@ -1078,7 +1042,7 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
                 quarter,
                 count,
                 content,
-                nonParticipantIds
+                nonParticipants
             });
         }
 
@@ -1086,6 +1050,17 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
         resetLessonForm();
         renderLessonHistory();
         renderActiveTabData();
+    }
+
+    function resetLessonForm() {
+        const form = document.getElementById('lessonForm');
+        if (form) form.reset();
+        document.getElementById('lessonId').value = '';
+        document.getElementById('lessonFormTitle').textContent = 'Lançar Nova Aula';
+        const container = document.getElementById('nonParticipantsChecklist');
+        if (container) {
+            container.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+        }
     }
 
     function renderLessonHistory() {
@@ -1102,10 +1077,10 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
                 <td>${l.quarter}º Trim</td>
                 <td>${l.count}</td>
                 <td>${l.content}</td>
-                <td>${l.nonParticipantIds ? l.nonParticipantIds.length : 0} alunos</td>
+                <td><span class="badge badge-danger">${l.nonParticipants ? l.nonParticipants.length : 0} alunos</span></td>
                 <td>
-                    <button class="btn btn-warning" style="padding: 2px 6px; font-size:0.75rem;" onclick="editLesson('${l.id}')">Editar</button>
-                    <button class="btn btn-danger" style="padding: 2px 6px; font-size:0.75rem;" onclick="deleteLesson('${l.id}')">Excluir</button>
+                    <button class="btn btn-warning" style="padding:2px 6px; font-size:0.75rem;" onclick="editLesson('${l.id}')">Editar</button>
+                    <button class="btn btn-danger" style="padding:2px 6px; font-size:0.75rem;" onclick="deleteLesson('${l.id}')">Excluir</button>
                 </td>
             `;
             tbody.appendChild(tr);
@@ -1116,34 +1091,26 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
         const activeClass = getActiveClass();
         if (!activeClass) return;
         const l = activeClass.lessons.find(item => item.id === id);
-        if (l) {
-            document.getElementById('lessonId').value = l.id;
-            document.getElementById('lessonDate').value = l.date;
-            document.getElementById('lessonQuarter').value = l.quarter;
-            document.getElementById('lessonCount').value = l.count;
-            document.getElementById('lessonContent').value = l.content;
+        if (!l) return;
 
-            renderNonParticipantsChecklist();
-            if (l.nonParticipantIds) {
-                l.nonParticipantIds.forEach(studentId => {
-                    const cb = document.getElementById(`check_np_${studentId}`);
-                    if (cb) cb.checked = true;
-                });
+        document.getElementById('lessonId').value = l.id;
+        document.getElementById('lessonDate').value = l.date;
+        document.getElementById('lessonQuarter').value = l.quarter;
+        document.getElementById('lessonCount').value = l.count;
+        document.getElementById('lessonContent').value = l.content;
+        document.getElementById('lessonFormTitle').textContent = 'Editar Aula';
+
+        activeClass.students.forEach(s => {
+            const chk = document.getElementById(`check_np_${s.id}`);
+            if (chk) {
+                chk.checked = l.nonParticipants ? l.nonParticipants.includes(s.id) : false;
             }
-        }
-    }
-
-    function resetLessonForm() {
-        const form = document.getElementById('lessonForm');
-        if (form) form.reset();
-        const idInp = document.getElementById('lessonId');
-        if (idInp) idInp.value = '';
-        renderNonParticipantsChecklist();
+        });
     }
 
     function deleteLesson(id) {
         const activeClass = getActiveClass();
-        if (activeClass && confirm("Deseja excluir esta aula?")) {
+        if (activeClass && confirm("Excluir aula registrada?")) {
             activeClass.lessons = activeClass.lessons.filter(l => l.id !== id);
             saveData();
             renderLessonHistory();
@@ -1151,164 +1118,141 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
         }
     }
 
-    // --- CÁLCULO DE DESCONTOS E AVALIAÇÕES ---
-    function calculateParticipationLoss(studentId, quarter) {
+    // --- CÁLCULOS E NOTAS ---
+    function getStudentNonPartDeduction(studentId, quarter) {
         const activeClass = getActiveClass();
         if (!activeClass) return 0;
+        let totalDeduction = 0;
 
-        let totalLoss = 0;
         activeClass.lessons.forEach(l => {
-            if (l.quarter.toString() === quarter.toString() && l.nonParticipantIds && l.nonParticipantIds.includes(studentId)) {
-                totalLoss += l.count * 0.5;
+            if (parseInt(l.quarter) === quarter && l.nonParticipants && l.nonParticipants.includes(studentId)) {
+                totalDeduction += (l.count === 2 ? 1.0 : 0.5);
             }
         });
-        return totalLoss;
+        return totalDeduction;
     }
 
     function renderEvalInputs() {
         const activeClass = getActiveClass();
-        const selectEl = document.getElementById('evalQuarterSelect');
+        const q = document.getElementById('evalQuarterSelect').value;
         const thead = document.getElementById('evalTableHead');
         const tbody = document.getElementById('evalTableBody');
         const notice = document.getElementById('rulesNotice');
 
-        if (!thead || !tbody || !selectEl) return;
+        if (!thead || !tbody || !activeClass) return;
 
-        const quarter = selectEl.value;
         thead.innerHTML = '';
         tbody.innerHTML = '';
-        if (!activeClass) return;
 
-        let noticeText = "";
-        let columns = [];
+        notice.textContent = `Regras de Cálculo para: ${activeClass.name} (${activeClass.level.toUpperCase()}) - Nota Base Inicial: 10,0 com descontos por não participação.`;
 
-        if (activeClass.level === 'fund2' || activeClass.level === 'ano5') {
-            noticeText = activeClass.level === 'ano5' 
-                ? "Regra 5º Ano (Moldes do 6º Ano): Participação (10 pts base) menos descontos. Outros trabalhos/provas."
-                : "Regra Fundamental 02 (6º ao 8º Ano): Participação (10 pts base) menos descontos. Outros trabalhos/provas.";
-            columns = [{ key: 'prat', label: 'Nota Prática/AVAL' }];
-        } else if (activeClass.level === 'ano9') {
-            noticeText = "Regra 9º Ano: Avaliação Prática + Prova Teórica.";
-            columns = [{ key: 'prat', label: 'Prática' }, { key: 'teor', label: 'Teórica' }];
-        } else {
-            noticeText = "Regra Ensino Médio: Avaliação Continuada + Projeto Integrado.";
-            columns = [{ key: 'cont', label: 'Continuada' }, { key: 'proj', label: 'Projeto' }];
-        }
+        thead.innerHTML = `
+            <tr>
+                <th>Aluno</th>
+                <th>Nota Atitudinal / Projeto (0-10)</th>
+                <th>Nota Prova / Avaliação (0-10)</th>
+            </tr>
+        `;
 
-        if (notice) notice.textContent = noticeText;
-
-        let trHead = `<tr><th>Aluno</th><th>Desconto de Participação (Auto)</th>`;
-        columns.forEach(c => trHead += `<th>${c.label}</th>`);
-        trHead += `</tr>`;
-        thead.innerHTML = trHead;
-
-        const qKey = 'q' + quarter;
-        const extraData = activeClass.extraGrades[qKey] || {};
+        const qKey = 'q' + q;
+        const extra = activeClass.extraGrades[qKey] || {};
 
         activeClass.students.forEach(s => {
-            const loss = calculateParticipationLoss(s.id, quarter);
-            const sGrades = extraData[s.id] || {};
-
-            let tr = `<tr><td><strong>${s.name}</strong></td><td><span class="badge badge-danger">-${loss.toFixed(1)}</span></td>`;
-            columns.forEach(c => {
-                const val = sGrades[c.key] !== undefined ? sGrades[c.key] : '';
-                tr += `<td><input type="number" step="0.1" min="0" max="10" class="eval-input" data-student="${s.id}" data-key="${c.key}" value="${val}" style="width:80px; padding:4px;"></td>`;
-            });
-            tr += `</tr>`;
-            tbody.innerHTML += tr;
+            const sExtra = extra[s.id] || { att: '', eval: '' };
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${s.name}</strong></td>
+                <td><input type="number" step="0.1" min="0" max="10" id="att_${s.id}" value="${sExtra.att !== undefined ? sExtra.att : ''}" style="width:80px;"></td>
+                <td><input type="number" step="0.1" min="0" max="10" id="eval_${s.id}" value="${sExtra.eval !== undefined ? sExtra.eval : ''}" style="width:80px;"></td>
+            `;
+            tbody.appendChild(tr);
         });
     }
 
     function saveExtraEvaluations() {
         const activeClass = getActiveClass();
         if (!activeClass) return;
+        const q = document.getElementById('evalQuarterSelect').value;
+        const qKey = 'q' + q;
 
-        const quarter = document.getElementById('evalQuarterSelect').value;
-        const qKey = 'q' + quarter;
-
+        if (!activeClass.extraGrades) activeClass.extraGrades = { q1: {}, q2: {}, q3: {} };
         if (!activeClass.extraGrades[qKey]) activeClass.extraGrades[qKey] = {};
 
-        const inputs = document.querySelectorAll('.eval-input');
-        inputs.forEach(inp => {
-            const studentId = inp.getAttribute('data-student');
-            const key = inp.getAttribute('data-key');
-            const val = inp.value !== '' ? parseFloat(inp.value) : '';
+        activeClass.students.forEach(s => {
+            const attVal = document.getElementById(`att_${s.id}`).value;
+            const evalVal = document.getElementById(`eval_${s.id}`).value;
 
-            if (!activeClass.extraGrades[qKey][studentId]) {
-                activeClass.extraGrades[qKey][studentId] = {};
-            }
-            activeClass.extraGrades[qKey][studentId][key] = val;
+            activeClass.extraGrades[qKey][s.id] = {
+                att: attVal !== '' ? parseFloat(attVal) : null,
+                eval: evalVal !== '' ? parseFloat(evalVal) : null
+            };
         });
 
         saveData();
-        alert("Notas do " + quarter + "º Trimestre salvas com sucesso!");
+        alert("Notas salvas com sucesso!");
         renderActiveTabData();
     }
 
-    // --- TABELAS DE DETALHAMENTO DOS TRIMESTRES ---
     function calculateQuarterGrade(studentId, quarter) {
         const activeClass = getActiveClass();
-        if (!activeClass) return 0;
+        if (!activeClass) return { raw: 0, final: 0, deduction: 0 };
 
-        const loss = calculateParticipationLoss(studentId, quarter);
-        const basePart = Math.max(0, 10 - loss);
+        const deduction = getStudentNonPartDeduction(studentId, quarter);
         const qKey = 'q' + quarter;
-        const extra = (activeClass.extraGrades[qKey] && activeClass.extraGrades[qKey][studentId]) ? activeClass.extraGrades[qKey][studentId] : {};
+        const sExtra = (activeClass.extraGrades && activeClass.extraGrades[qKey] && activeClass.extraGrades[qKey][studentId]) || {};
 
-        if (activeClass.level === 'fund2' || activeClass.level === 'ano5') {
-            const prat = extra.prat !== undefined && extra.prat !== '' ? parseFloat(extra.prat) : 10;
-            return Math.min(10, (basePart + prat) / 2);
-        } else if (activeClass.level === 'ano9') {
-            const prat = extra.prat !== undefined && extra.prat !== '' ? parseFloat(extra.prat) : 10;
-            const teor = extra.teor !== undefined && extra.teor !== '' ? parseFloat(extra.teor) : 10;
-            return Math.min(10, (basePart * 0.4) + (prat * 0.3) + (teor * 0.3));
-        } else {
-            const cont = extra.cont !== undefined && extra.cont !== '' ? parseFloat(extra.cont) : 10;
-            const proj = extra.proj !== undefined && extra.proj !== '' ? parseFloat(extra.proj) : 10;
-            return Math.min(10, (basePart * 0.3) + (cont * 0.4) + (proj * 0.3));
-        }
+        const att = sExtra.att !== null && sExtra.att !== undefined ? sExtra.att : 10;
+        const evalGrade = sExtra.eval !== null && sExtra.eval !== undefined ? sExtra.eval : 10;
+
+        let baseGrade = (att + evalGrade) / 2;
+        let finalGrade = Math.max(0, baseGrade - deduction);
+
+        return {
+            raw: baseGrade.toFixed(1),
+            deduction: deduction.toFixed(1),
+            final: finalGrade.toFixed(1)
+        };
     }
 
     function renderQuarterTable(quarter) {
         const activeClass = getActiveClass();
         const container = document.getElementById(`table-q${quarter}-container`);
-        if (!container || !activeClass) return;
+        if (!container) return;
+
+        if (!activeClass) {
+            container.innerHTML = '<p>Nenhuma turma selecionada.</p>';
+            return;
+        }
 
         let html = `
             <table class="custom-table">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Aluno</th>
-                        <th>Perdas p/ Não Part.</th>
-                        <th>Nota de Partic. (Base 10)</th>
-                        <th>Média do Trimestre</th>
+                        <th>Desconto de Faltas/Não Part.</th>
+                        <th>Média Bruta</th>
+                        <th>Nota Final ${quarter}º Trimestre</th>
                     </tr>
                 </thead>
                 <tbody>
         `;
 
-        activeClass.students.forEach((s, idx) => {
-            const loss = calculateParticipationLoss(s.id, quarter);
-            const partGrade = Math.max(0, 10 - loss);
-            const finalQuarterGrade = calculateQuarterGrade(s.id, quarter);
-
+        activeClass.students.forEach(s => {
+            const calc = calculateQuarterGrade(s.id, quarter);
             html += `
                 <tr>
-                    <td>${idx + 1}</td>
-                    <td>${s.name}</td>
-                    <td><span class="badge badge-danger">-${loss.toFixed(1)}</span></td>
-                    <td>${partGrade.toFixed(1)}</td>
-                    <td><strong>${finalQuarterGrade.toFixed(1)}</strong></td>
+                    <td><strong>${s.name}</strong></td>
+                    <td><span class="badge badge-danger">-${calc.deduction} pts</span></td>
+                    <td>${calc.raw}</td>
+                    <td><strong>${calc.final}</strong></td>
                 </tr>
             `;
         });
 
-        html += `</tbody></table>`;
+        html += '</tbody></table>';
         container.innerHTML = html;
     }
 
-    // --- TABELA DE MÉDIAS E FINAIS ---
     function renderMediasTable() {
         const activeClass = getActiveClass();
         const container = document.getElementById('table-medias-container');
@@ -1319,10 +1263,10 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
                 <thead>
                     <tr>
                         <th>Aluno</th>
-                        <th>1º Trimestre</th>
-                        <th>2º Trimestre</th>
-                        <th>3º Trimestre</th>
-                        <th>Média Anual</th>
+                        <th>1º Trim</th>
+                        <th>2º Trim</th>
+                        <th>3º Trim</th>
+                        <th>Média Anual Final</th>
                         <th>Situação</th>
                     </tr>
                 </thead>
@@ -1330,68 +1274,60 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
         `;
 
         activeClass.students.forEach(s => {
-            const q1 = calculateQuarterGrade(s.id, 1);
-            const q2 = calculateQuarterGrade(s.id, 2);
-            const q3 = calculateQuarterGrade(s.id, 3);
-            const finalAvg = (q1 + q2 + q3) / 3;
+            const q1 = parseFloat(calculateQuarterGrade(s.id, 1).final);
+            const q2 = parseFloat(calculateQuarterGrade(s.id, 2).final);
+            const q3 = parseFloat(calculateQuarterGrade(s.id, 3).final);
 
-            const rec = activeClass.recovery || {};
-            const recAnnual = rec.annual && rec.annual[s.id] !== undefined ? parseFloat(rec.annual[s.id]) : null;
-
-            const effectiveFinal = (recAnnual !== null && !isNaN(recAnnual)) ? Math.max(finalAvg, recAnnual) : finalAvg;
-            const status = effectiveFinal >= 6.0 ? '<span class="badge badge-success">Aprovado</span>' : '<span class="badge badge-danger">Em Recuperação</span>';
+            const annual = ((q1 + q2 + q3) / 3).toFixed(1);
+            const status = annual >= 6.0 ? '<span class="badge badge-success">Aprovado</span>' : '<span class="badge badge-danger">Recuperação</span>';
 
             html += `
                 <tr>
                     <td><strong>${s.name}</strong></td>
-                    <td>${q1.toFixed(1)}</td>
-                    <td>${q2.toFixed(1)}</td>
-                    <td>${q3.toFixed(1)}</td>
-                    <td><strong>${effectiveFinal.toFixed(1)}</strong></td>
+                    <td>${q1}</td>
+                    <td>${q2}</td>
+                    <td>${q3}</td>
+                    <td><strong>${annual}</strong></td>
                     <td>${status}</td>
                 </tr>
             `;
         });
 
-        html += `</tbody></table>`;
+        html += '</tbody></table>';
         container.innerHTML = html;
     }
 
-    // --- TABELA DE RECUPERAÇÃO ---
     function renderRecoveryTable() {
         const activeClass = getActiveClass();
         const tbody = document.getElementById('recoveryTableBody');
         if (!tbody || !activeClass) return;
-
         tbody.innerHTML = '';
+
         const rec = activeClass.recovery || { q1: {}, q2: {}, q3: {}, annual: {} };
 
         activeClass.students.forEach(s => {
-            const q1 = calculateQuarterGrade(s.id, 1);
-            const q2 = calculateQuarterGrade(s.id, 2);
-            const q3 = calculateQuarterGrade(s.id, 3);
-            const annual = (q1 + q2 + q3) / 3;
+            const q1 = parseFloat(calculateQuarterGrade(s.id, 1).final);
+            const q2 = parseFloat(calculateQuarterGrade(s.id, 2).final);
+            const q3 = parseFloat(calculateQuarterGrade(s.id, 3).final);
+            const annual = parseFloat(((q1 + q2 + q3) / 3).toFixed(1));
 
-            const recQ1 = rec.q1 && rec.q1[s.id] !== undefined ? rec.q1[s.id] : '';
-            const recQ2 = rec.q2 && rec.q2[s.id] !== undefined ? rec.q2[s.id] : '';
-            const recQ3 = rec.q3 && rec.q3[s.id] !== undefined ? rec.q3[s.id] : '';
-            const recAnnual = rec.annual && rec.annual[s.id] !== undefined ? rec.annual[s.id] : '';
-
-            const finalAnnual = (recAnnual !== '' && !isNaN(parseFloat(recAnnual))) ? Math.max(annual, parseFloat(recAnnual)) : annual;
-            const status = finalAnnual >= 6.0 ? '<span class="badge badge-success">Aprovado</span>' : '<span class="badge badge-danger">Reprovado</span>';
+            const reqQ1 = rec.q1 ? rec.q1[s.id] || '' : '';
+            const reqQ2 = rec.q2 ? rec.q2[s.id] || '' : '';
+            const reqQ3 = rec.q3 ? rec.q3[s.id] || '' : '';
+            const reqAnn = rec.annual ? rec.annual[s.id] || '' : '';
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td><strong>${s.name}</strong></td>
-                <td>${q1.toFixed(1)}</td>
-                <td><input type="number" step="0.1" class="rec-inp" data-type="q1" data-student="${s.id}" value="${recQ1}" style="width:60px;"></td>
-                <td>${q2.toFixed(1)}</td>
-                <td><input type="number" step="0.1" class="rec-inp" data-type="q2" data-student="${s.id}" value="${recQ2}" style="width:60px;"></td>
-                <td>${q3.toFixed(1)}</td>
-                <td><input type="number" step="0.1" class="rec-inp" data-type="q3" data-student="${s.id}" value="${recQ3}" style="width:60px;"></td>
-                <td><strong>${annual.toFixed(1)}</strong></td>
-                <td><input type="number" step="0.1" class="rec-inp" data-type="annual" data-student="${s.id}" value="${recAnnual}" style="width:60px;"></td>
-                <td>${status}</td>
+                <td>${q1}</td>
+                <td><input type="number" step="0.1" id="rec_q1_${s.id}" value="${reqQ1}" style="width:60px;"></td>
+                <td>${q2}</td>
+                <td><input type="number" step="0.1" id="rec_q2_${s.id}" value="${reqQ2}" style="width:60px;"></td>
+                <td>${q3}</td>
+                <td><input type="number" step="0.1" id="rec_q3_${s.id}" value="${reqQ3}" style="width:60px;"></td>
+                <td><strong>${annual}</strong></td>
+                <td><input type="number" step="0.1" id="rec_ann_${s.id}" value="${reqAnn}" style="width:60px;"></td>
+                <td>${annual >= 6.0 ? 'Aprovado' : 'Em Acompanhamento'}</td>
             `;
             tbody.appendChild(tr);
         });
@@ -1401,80 +1337,68 @@ O sistema aplicará o desconto automaticamente nas abas dos trimestres.
         const activeClass = getActiveClass();
         if (!activeClass) return;
 
-        if (!activeClass.recovery) {
-            activeClass.recovery = { q1: {}, q2: {}, q3: {}, annual: {} };
-        }
+        if (!activeClass.recovery) activeClass.recovery = { q1: {}, q2: {}, q3: {}, annual: {} };
 
-        const inputs = document.querySelectorAll('.rec-inp');
-        inputs.forEach(inp => {
-            const type = inp.getAttribute('data-type');
-            const studentId = inp.getAttribute('data-student');
-            const val = inp.value !== '' ? parseFloat(inp.value) : '';
-
-            if (!activeClass.recovery[type]) activeClass.recovery[type] = {};
-            activeClass.recovery[type][studentId] = val;
+        activeClass.students.forEach(s => {
+            activeClass.recovery.q1[s.id] = document.getElementById(`rec_q1_${s.id}`).value;
+            activeClass.recovery.q2[s.id] = document.getElementById(`rec_q2_${s.id}`).value;
+            activeClass.recovery.q3[s.id] = document.getElementById(`rec_q3_${s.id}`).value;
+            activeClass.recovery.annual[s.id] = document.getElementById(`rec_ann_${s.id}`).value;
         });
 
         saveData();
-        alert("Notas de Recuperação salvas!");
+        alert("Notas de recuperação salvas!");
         renderActiveTabData();
     }
 
-    // --- RELATÓRIO DE IMPRESSÃO ---
     function renderPrintReport() {
         const activeClass = getActiveClass();
         const container = document.getElementById('printTableContainer');
-        if (!container || !activeClass) return;
+        if (!container) return;
 
-        const printSchool = document.getElementById('printSchoolName');
-        const printClass = document.getElementById('printClassName');
-        const printTeacher = document.getElementById('printTeacherName');
+        document.getElementById('printSchoolName').textContent = appData.schoolName || 'Colégio';
+        document.getElementById('printClassName').textContent = activeClass ? activeClass.name : '-';
+        document.getElementById('printTeacherName').textContent = activeClass ? activeClass.teacher : '-';
 
-        if (printSchool) printSchool.textContent = appData.schoolName || 'Colégio Estadual de Educação Física';
-        if (printClass) printClass.textContent = activeClass.name;
-        if (printTeacher) printTeacher.textContent = activeClass.teacher;
+        if (!activeClass) {
+            container.innerHTML = '<p>Nenhuma turma selecionada.</p>';
+            return;
+        }
 
         let html = `
             <table class="custom-table">
                 <thead>
                     <tr>
                         <th>Aluno</th>
-                        <th>Média 1º T</th>
-                        <th>Média 2º T</th>
-                        <th>Média 3º T</th>
-                        <th>Média Anual</th>
-                        <th>Situação</th>
+                        <th>1º Trimestre</th>
+                        <th>2º Trimestre</th>
+                        <th>3º Trimestre</th>
+                        <th>Média Anual Final</th>
                     </tr>
                 </thead>
                 <tbody>
         `;
 
         activeClass.students.forEach(s => {
-            const q1 = calculateQuarterGrade(s.id, 1);
-            const q2 = calculateQuarterGrade(s.id, 2);
-            const q3 = calculateQuarterGrade(s.id, 3);
-            const annual = (q1 + q2 + q3) / 3;
-
-            const rec = activeClass.recovery || {};
-            const recAnnual = rec.annual && rec.annual[s.id] !== undefined ? parseFloat(rec.annual[s.id]) : null;
-            const finalAvg = (recAnnual !== null && !isNaN(recAnnual)) ? Math.max(annual, recAnnual) : annual;
+            const q1 = calculateQuarterGrade(s.id, 1).final;
+            const q2 = calculateQuarterGrade(s.id, 2).final;
+            const q3 = calculateQuarterGrade(s.id, 3).final;
+            const annual = ((parseFloat(q1) + parseFloat(q2) + parseFloat(q3)) / 3).toFixed(1);
 
             html += `
                 <tr>
-                    <td>${s.name}</td>
-                    <td>${q1.toFixed(1)}</td>
-                    <td>${q2.toFixed(1)}</td>
-                    <td>${q3.toFixed(1)}</td>
-                    <td><strong>${finalAvg.toFixed(1)}</strong></td>
-                    <td>${finalAvg >= 6.0 ? 'Aprovado' : 'Retido/Recuperação'}</td>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${q1}</td>
+                    <td>${q2}</td>
+                    <td>${q3}</td>
+                    <td><strong>${annual}</strong></td>
                 </tr>
             `;
         });
 
-        html += `</tbody></table>`;
+        html += '</tbody></table>';
         container.innerHTML = html;
     }
 </script>
 </body>
 </html>
-
